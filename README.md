@@ -195,10 +195,12 @@ This represents cumulative returns of **70.32%** and **60.74%**, respectively, r
 investment-portfolio-analytics/
 │
 ├── data/
+│   ├── README.md
 │   ├── Simulated_Portfolio_Transactions.csv
 │   └── SP500_Benchmark_Prices_Import.csv
 │
 ├── images/
+│   ├── README.md
 │   ├── Investment_Portfolio_ERD.png
 │   ├── Portfolio_Allocation_by_Security.png
 │   ├── Portfolio_Sector_Exposure.png
