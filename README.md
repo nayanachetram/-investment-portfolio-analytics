@@ -28,7 +28,7 @@ The analysis focuses on:
 - SQL
 - DBeaver
 - GitHub
-- Historical market data
+- Historical Market Data
 
 ## Database Design
 
@@ -87,23 +87,23 @@ The complete SQL analysis can be found in:
 
 ### Portfolio Performance
 
-The portfolio generated a cumulative return of:
+From January 8, 2024 through September 11, 2026, the simulated portfolio generated a cumulative return of:
 
 **70.32%**
 
-During the same analysis period, the S&P 500 generated:
+Over the same period, the S&P 500 generated:
 
-**61.44%**
+**60.74%**
 
 This resulted in:
 
-**+8.88 percentage points of excess return**
+**+9.58 percentage points of outperformance**
 
 ### Portfolio Concentration
 
 The five largest positions represented:
 
-**48.85% of portfolio market value**
+**48.85% of invested portfolio assets**
 
 The largest individual position was:
 
@@ -119,7 +119,7 @@ Consumer Staples was the second-largest sector exposure at:
 
 **20.53%**
 
-The portfolio maintained exposure across all 11 represented sectors.
+The portfolio maintained exposure across all 11 GICS sectors.
 
 ### Return Contribution
 
@@ -145,21 +145,23 @@ Prologis (PLD) was the only negative contributor in the final security-level ana
 
 ![Portfolio Allocation](images/Portfolio_Allocation_by_Security.png)
 
-This visualization shows the distribution of portfolio market value across individual securities.
+This visualization shows the distribution of invested portfolio market value across individual securities.
 
 ### Portfolio Sector Exposure
 
 ![Portfolio Sector Exposure](images/Portfolio_Sector_Exposure.png)
 
-This visualization shows portfolio market value allocated across the represented GICS sectors.
+This visualization shows invested portfolio market value allocated across the 11 GICS sectors represented in the portfolio.
 
 ### Portfolio vs. S&P 500
 
 ![Portfolio vs S&P 500](images/Portfolio_vs_SP500_Performance.png)
 
-Both the portfolio and S&P 500 are indexed to 100 at the beginning of the comparison period to illustrate their cumulative performance over time.
+Both the portfolio and S&P 500 are indexed to 100 on January 8, 2024 to provide an equal starting point for the performance comparison.
 
-The portfolio finished the period at approximately **170.32**, compared with approximately **161.44** for the S&P 500.
+By September 11, 2026, the simulated portfolio reached an indexed value of **170.32**, compared with **160.74** for the S&P 500.
+
+This represents cumulative returns of **70.32%** and **60.74%**, respectively, resulting in **9.58 percentage points of portfolio outperformance** over the analyzed period.
 
 ## Repository Structure
 
@@ -195,10 +197,12 @@ investment-portfolio-analytics/
 
 Historical market data is used for security and benchmark analysis, while portfolio transactions are simulated for educational and analytical purposes.
 
-The portfolio does not represent an actual investment account, and the results should not be interpreted as investment advice.
+The portfolio does not represent an actual investment account, and the results should not be interpreted as investment advice or actual investment performance.
 
 Stock split information is maintained as reference data. Historical security prices used in the analysis reflect the adjusted historical series provided by the source, so stock splits are not applied again when calculating portfolio holdings.
 
+Portfolio performance in this project is based on price appreciation and transaction activity and does not incorporate dividend income. The S&P 500 price-return index is therefore used for the benchmark comparison rather than a total-return index.
+
 ## Purpose
 
-This project demonstrates the application of SQL and relational database design to financial analysis, including portfolio construction, market data management, performance measurement, benchmarking, and investment analytics.
+This project demonstrates the application of SQL and relational database design to financial analysis, including portfolio construction, market data management, performance measurement, benchmarking, sector analysis, concentration analysis, and security-level return contribution.
