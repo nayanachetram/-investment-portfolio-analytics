@@ -1,112 +1,165 @@
 # Investment Portfolio Analytics
 
-A PostgreSQL-based investment portfolio analytics project that combines historical market data, simulated portfolio transactions, and S&P 500 benchmarking to analyze portfolio performance, allocation, diversification, and security-level return contribution.
+A SQL-based investment portfolio analytics project built with PostgreSQL using historical market data, simulated portfolio transactions, and S&P 500 benchmarking.
+
+The project models an investment portfolio database and uses SQL to analyze portfolio performance, asset allocation, sector exposure, concentration risk, security-level gains and losses, and benchmark-relative performance.
 
 ## Project Overview
 
-This project models and analyzes a simulated $1,000,000 investment portfolio containing 15 publicly traded companies across all 11 GICS sectors.
+This project was built to demonstrate how SQL can be used to organize and analyze investment portfolio data.
 
-The relational database stores portfolio transactions, historical security prices, benchmark data, sector classifications, dividends, and stock split information. SQL queries are then used to transform the underlying data into portfolio-level investment analytics.
+The database combines historical security prices with simulated portfolio transactions to evaluate how a $1,000,000 portfolio performed over time.
 
-The analysis covers the period from January 2024 through September 2026.
+The analysis focuses on:
 
-## Technologies
+- Portfolio holdings and market value
+- Portfolio allocation by security
+- Sector exposure
+- Portfolio concentration
+- Security-level gains and losses
+- Return contribution
+- Overall portfolio performance
+- S&P 500 benchmark comparison
+- Historical portfolio performance
+
+## Technologies Used
 
 - PostgreSQL
 - SQL
 - DBeaver
-- Relational Database Design
 - GitHub
-- Historical Market Data
+- Historical market data
 
 ## Database Design
 
-The database consists of interconnected tables:
+The PostgreSQL database contains the following tables:
 
-- `portfolios` — portfolio information and initial capital
-- `transactions` — simulated BUY and SELL transactions
-- `securities` — security and company information
-- `sectors` — GICS sector classifications
-- `daily_prices` — historical OHLCV market data
+- `portfolios` — portfolio information and starting capital
+- `transactions` — simulated buy and sell transactions
+- `securities` — security tickers and company information
+- `sectors` — sector classifications
+- `daily_prices` — historical security price data
 - `benchmarks` — benchmark information
-- `benchmark_prices` — historical S&P 500 values
-- `dividends` — dividend information
+- `benchmark_prices` — historical benchmark values
+- `dividends` — structure for dividend information
 - `stock_splits` — stock split reference data
 
-### Entity Relationship Diagram
+Primary and foreign keys connect the tables and allow portfolio, security, sector, transaction, and market data to be analyzed together.
 
-<p align="center">
-  <img src="images/Investment_Portfolio_ERD.png" width="750">
-</p>
+## Entity Relationship Diagram
+
+![Investment Portfolio ERD](images/Investment_Portfolio_ERD.png)
+
+## Dataset
+
+The portfolio contains 15 securities representing all 11 GICS sectors.
+
+Historical daily market prices cover the period from January 2024 through September 2026.
+
+The project uses a simulated portfolio beginning with:
+
+**Initial Capital: $1,000,000**
+
+The transaction dataset contains simulated BUY and SELL activity using historical market prices.
+
+The S&P 500 is used as the portfolio benchmark.
 
 ## Portfolio Analytics
 
-SQL was used to calculate and analyze:
+The SQL analysis includes:
 
-1. Current security holdings
-2. Portfolio cash balance
-3. Current market value by security
-4. Total portfolio value
-5. Portfolio allocation and security weights
-6. Sector exposure
-7. Top-five holding concentration
-8. Portfolio return
-9. Portfolio performance versus the S&P 500
-10. Security-level gain/loss and return contribution
+1. Current portfolio holdings
+2. Market value by security
+3. Portfolio weight by security
+4. Sector exposure
+5. Portfolio concentration
+6. Portfolio return
+7. S&P 500 benchmark return
+8. Excess return
+9. Security-level gain/loss analysis
+10. Return contribution by security
 
-The complete analysis can be found in:
+The complete SQL analysis can be found in:
 
 `sql/portfolio_analytics.sql`
 
-## Key Results
+## Key Findings
 
-The simulated portfolio grew from an initial value of **$1,000,000** to approximately **$1.70 million**, representing a **70.32% portfolio return** over the analysis period.
+### Portfolio Performance
 
-Over the comparable period, the **S&P 500 returned 61.44%**, resulting in approximately **8.88 percentage points of excess return** for the portfolio.
+The portfolio generated a cumulative return of:
 
-Additional findings include:
+**70.32%**
 
-- Walmart represented the largest current position at approximately **12.91%** of invested assets.
-- The five largest positions represented approximately **48.85%** of invested assets.
-- Information Technology was the largest sector exposure at approximately **20.73%**.
-- Consumer Staples represented approximately **20.53%** of invested assets.
-- NVIDIA generated the largest security-level gain in the simulated portfolio.
+During the same analysis period, the S&P 500 generated:
 
-## Portfolio Allocation
+**61.44%**
 
-<p align="center">
-  <img src="images/Portfolio_Allocation_by_Security.png" width="800">
-</p>
+This resulted in:
 
-The portfolio contains 15 securities across all 11 GICS sectors, allowing the analysis to examine both individual security concentration and broader sector diversification.
+**+8.88 percentage points of excess return**
 
-## Sector Exposure
+### Portfolio Concentration
 
-<p align="center">
-  <img src="images/Portfolio_Sector_Exposure.png" width="800">
-</p>
+The five largest positions represented:
 
-Sector-level aggregation was performed by joining portfolio positions with security and sector reference tables.
+**48.85% of portfolio market value**
 
-## Portfolio vs. S&P 500
+The largest individual position was:
 
-<p align="center">
-  <img src="images/Portfolio_vs_SP500_Performance.png" width="800">
-</p>
+**Walmart (WMT) — 12.91%**
 
-Portfolio and benchmark performance were normalized to an index value of 100 to make their relative performance over time directly comparable.
+### Sector Exposure
 
-## Data
+The portfolio's largest sector exposure was:
 
-The project combines:
+**Information Technology — 20.73%**
 
-- Historical daily market price data
-- S&P 500 benchmark data
-- Simulated portfolio transactions
-- GICS sector classifications
-- Corporate-action reference information
+Consumer Staples was the second-largest sector exposure at:
 
-The portfolio transactions are simulated for analytical and educational purposes and do not represent actual investment activity.
+**20.53%**
+
+The portfolio maintained exposure across all 11 represented sectors.
+
+### Return Contribution
+
+The largest positive contributor was:
+
+**NVIDIA (NVDA) — +12.44 percentage points**
+
+Other major contributors included:
+
+- Walmart (WMT): +11.02 percentage points
+- Caterpillar (CAT): +8.84 percentage points
+- JPMorgan Chase (JPM): +5.34 percentage points
+- Exxon Mobil (XOM): +5.22 percentage points
+- Meta Platforms (META): +5.06 percentage points
+
+Prologis (PLD) was the only negative contributor in the final security-level analysis:
+
+**PLD — -0.89 percentage points**
+
+## Visualizations
+
+### Portfolio Allocation by Security
+
+![Portfolio Allocation](images/Portfolio_Allocation_by_Security.png)
+
+This visualization shows the distribution of portfolio market value across individual securities.
+
+### Portfolio Sector Exposure
+
+![Portfolio Sector Exposure](images/Portfolio_Sector_Exposure.png)
+
+This visualization shows portfolio market value allocated across the represented GICS sectors.
+
+### Portfolio vs. S&P 500
+
+![Portfolio vs S&P 500](images/Portfolio_vs_SP500_Performance.png)
+
+Both the portfolio and S&P 500 are indexed to 100 at the beginning of the comparison period to illustrate their cumulative performance over time.
+
+The portfolio finished the period at approximately **170.32**, compared with approximately **161.44** for the S&P 500.
 
 ## Repository Structure
 
@@ -114,8 +167,8 @@ The portfolio transactions are simulated for analytical and educational purposes
 investment-portfolio-analytics/
 │
 ├── data/
-│   ├── SP500_Benchmark_Prices_Import.csv
-│   └── Simulated_Portfolio_Transactions.csv
+│   ├── Simulated_Portfolio_Transactions.csv
+│   └── SP500_Benchmark_Prices_Import.csv
 │
 ├── images/
 │   ├── Investment_Portfolio_ERD.png
@@ -129,21 +182,23 @@ investment-portfolio-analytics/
 └── README.md
 ```
 
-## Skills Demonstrated
+## How to Run
 
-This project demonstrates practical experience with:
+1. Create the PostgreSQL database.
+2. Create the required tables and relationships.
+3. Import the historical market and portfolio datasets.
+4. Import the S&P 500 benchmark data.
+5. Run the queries contained in `sql/portfolio_analytics.sql`.
+6. Review the resulting portfolio analytics and visualizations.
 
-- Relational database design
-- Primary and foreign key relationships
-- SQL joins and aggregations
-- Common Table Expressions (CTEs)
-- Financial data analysis
-- Portfolio performance measurement
-- Benchmark comparison
-- Sector and concentration analysis
-- Data validation and transformation
-- Investment analytics
+## Data Notes
 
-## Disclaimer
+Historical market data is used for security and benchmark analysis, while portfolio transactions are simulated for educational and analytical purposes.
 
-This project was created for educational and portfolio purposes. Portfolio transactions are simulated, and the results should not be interpreted as investment advice or actual investment performance.
+The portfolio does not represent an actual investment account, and the results should not be interpreted as investment advice.
+
+Stock split information is maintained as reference data. Historical security prices used in the analysis reflect the adjusted historical series provided by the source, so stock splits are not applied again when calculating portfolio holdings.
+
+## Purpose
+
+This project demonstrates the application of SQL and relational database design to financial analysis, including portfolio construction, market data management, performance measurement, benchmarking, and investment analytics.
