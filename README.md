@@ -8,7 +8,7 @@ The project models an investment portfolio database and uses SQL to analyze port
 
 This project was built to demonstrate how SQL can be used to organize and analyze investment portfolio data.
 
-The database combines historical security prices with simulated portfolio transactions to evaluate how a $1,000,000 portfolio performed over time.
+The database combines historical security prices with simulated portfolio transactions to evaluate the performance and composition of a simulated $1,000,000 investment portfolio.
 
 The analysis focuses on:
 
@@ -37,7 +37,7 @@ The PostgreSQL database contains the following tables:
 - `portfolios` — portfolio information and starting capital
 - `transactions` — simulated buy and sell transactions
 - `securities` — security tickers and company information
-- `sectors` — sector classifications
+- `sectors` — GICS sector classifications
 - `daily_prices` — historical security price data
 - `benchmarks` — benchmark information
 - `benchmark_prices` — historical benchmark values
@@ -46,27 +46,51 @@ The PostgreSQL database contains the following tables:
 
 Primary and foreign keys connect the tables and allow portfolio, security, sector, transaction, and market data to be analyzed together.
 
+The complete PostgreSQL database structure, including tables, primary keys, foreign keys, constraints, and indexes, can be found in:
+
+`sql/database_schema.sql`
+
 ## Entity Relationship Diagram
 
 ![Investment Portfolio ERD](images/Investment_Portfolio_ERD.png)
 
 ## Dataset
 
-The portfolio contains 15 securities representing all 11 GICS sectors.
+The simulated portfolio begins with **$1,000,000 in initial capital** and contains **15 publicly traded companies representing all 11 GICS sectors**.
 
-Historical daily market prices cover the period from January 2024 through September 2026.
+Historical daily security price data covers the period from January 2024 through September 2026.
 
-The project uses a simulated portfolio beginning with:
+### Historical Market Data
 
-**Initial Capital: $1,000,000**
+Historical daily stock price data was sourced from **Nasdaq** and loaded into PostgreSQL for analysis.
 
-The transaction dataset contains simulated BUY and SELL activity using historical market prices.
+The historical dataset contains daily open, high, low, close, and volume data for each of the 15 securities in the portfolio. The database contains more than 10,000 daily security price records across the analysis period.
 
-The S&P 500 is used as the portfolio benchmark.
+The individual raw historical stock-price CSV files are not included in this repository. Instead, they were used as source data for the PostgreSQL `daily_prices` table.
+
+### Portfolio Transactions
+
+Portfolio transactions are **simulated** and were created specifically for this project.
+
+The transaction dataset contains BUY and SELL activity across the portfolio's securities using historical market prices and trading dates. The simulated transactions were structured to maintain a long-only portfolio without selling more shares than were held.
+
+The transaction dataset used in the project is included in:
+
+`data/Simulated_Portfolio_Transactions.csv`
+
+### Benchmark Data
+
+The **S&P 500 price-return index** is used as the portfolio benchmark.
+
+Historical benchmark data is stored in PostgreSQL and used to compare the simulated portfolio's cumulative performance against the broader U.S. equity market.
+
+The benchmark dataset used in the project is included in:
+
+`data/SP500_Benchmark_Prices_Import.csv`
 
 ## Portfolio Analytics
 
-The SQL analysis includes:
+SQL was used to calculate and analyze:
 
 1. Current portfolio holdings
 2. Market value by security
@@ -76,10 +100,12 @@ The SQL analysis includes:
 6. Portfolio return
 7. S&P 500 benchmark return
 8. Excess return
-9. Security-level gain/loss analysis
+9. Security-level gain/loss
 10. Return contribution by security
 
-The complete SQL analysis can be found in:
+The PostgreSQL database schema and complete SQL analysis can be found in:
+
+`sql/database_schema.sql`
 
 `sql/portfolio_analytics.sql`
 
@@ -179,6 +205,7 @@ investment-portfolio-analytics/
 │   └── Portfolio_vs_SP500_Performance.png
 │
 ├── sql/
+│   ├── database_schema.sql
 │   └── portfolio_analytics.sql
 │
 └── README.md
@@ -186,23 +213,36 @@ investment-portfolio-analytics/
 
 ## How to Run
 
-1. Create the PostgreSQL database.
-2. Create the required tables and relationships.
-3. Import the historical market and portfolio datasets.
-4. Import the S&P 500 benchmark data.
+1. Create a PostgreSQL database.
+2. Run `sql/database_schema.sql` to create the database tables, relationships, constraints, and indexes.
+3. Load the historical security price data into the `daily_prices` table.
+4. Import the simulated portfolio transactions and S&P 500 benchmark data.
 5. Run the queries contained in `sql/portfolio_analytics.sql`.
 6. Review the resulting portfolio analytics and visualizations.
 
-## Data Notes
+## Methodology and Data Notes
 
-Historical market data is used for security and benchmark analysis, while portfolio transactions are simulated for educational and analytical purposes.
+Historical market prices represent actual historical market data, while the portfolio itself and its transactions are simulated for educational and analytical purposes.
 
-The portfolio does not represent an actual investment account, and the results should not be interpreted as investment advice or actual investment performance.
+Historical security prices used in the analysis reflect the source-adjusted historical series. Stock split information is maintained separately as reference data in the `stock_splits` table and is not applied again to portfolio holdings, avoiding double-adjustment of historical prices.
 
-Stock split information is maintained as reference data. Historical security prices used in the analysis reflect the adjusted historical series provided by the source, so stock splits are not applied again when calculating portfolio holdings.
+Portfolio performance in this project is based on price appreciation and transaction activity and does not incorporate dividend income. For this reason, the **S&P 500 price-return index** is used for the benchmark comparison rather than a total-return index that assumes dividend reinvestment.
 
-Portfolio performance in this project is based on price appreciation and transaction activity and does not incorporate dividend income. The S&P 500 price-return index is therefore used for the benchmark comparison rather than a total-return index.
+Security-level gain/loss analysis compares current security value with net cash invested through BUY and SELL transactions. It is intended as a portfolio contribution analysis rather than a tax-lot-based realized and unrealized P&L calculation.
+
+All portfolio transactions are simulated and do not represent actual investment activity. Results should not be interpreted as investment advice or actual investment performance.
 
 ## Purpose
 
-This project demonstrates the application of SQL and relational database design to financial analysis, including portfolio construction, market data management, performance measurement, benchmarking, sector analysis, concentration analysis, and security-level return contribution.
+This project demonstrates the application of SQL and relational database design to financial analysis, including:
+
+- Relational database design
+- Primary and foreign key relationships
+- SQL joins and aggregations
+- Common Table Expressions (CTEs)
+- Historical financial data management
+- Portfolio performance measurement
+- Benchmark comparison
+- Sector and concentration analysis
+- Security-level return contribution
+- Data validation and transformation
